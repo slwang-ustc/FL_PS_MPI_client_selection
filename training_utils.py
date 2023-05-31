@@ -6,7 +6,6 @@ import torch.nn as nn
 
 
 def train(model, data_loader, optimizer, local_iters=None, device=torch.device("cpu")):
-
     model.train()
     if local_iters is None:
         local_iters = math.ceil(len(data_loader.loader.dataset) / data_loader.loader.batch_size)
