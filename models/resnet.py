@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/data/slwang/FL_PS_MPI_FLANC')
+sys.path.append('/data/slwang/FL_PS_MPI_client_selection')
 import torch
 from config import cfg
 from torch import nn
