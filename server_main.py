@@ -45,7 +45,7 @@ formatter = logging.Formatter("%(message)s")
 fileHandler.setFormatter(formatter)
 logger.addHandler(fileHandler)
 
-comm_tags = np.ones(cfg['client_num'])
+comm_tags = np.ones(cfg['client_num'] + 1)
 
 
 def main():
