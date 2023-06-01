@@ -143,7 +143,7 @@ def aggregate_models(global_model, client_list):
             for k, v in client.params_dict.items():
                 if 'num_batches_tracked' not in k: 
                     params_dict[k] += \
-                        client.aggregate_weight * (client.params_dict[k] - params_dict[k])
+                        client.aggregate_weight * (client.params_dict[k] - global_model.state_dict()[k])
     global_model.load_state_dict(params_dict)
 
 
