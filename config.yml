@@ -17,10 +17,10 @@ test_batch_size: 64                 # test batch size of the server
 client_test_batch_size: 64
 
 # training setting
-lr: 0.01
-decay_rate: 0.99
+lr: 0.1
+decay_rate: 0.993
 min_lr: 0.001
-momentum: 0.9                        # momentum < 0 means the momentum is None
+momentum: -1                        # momentum < 0 means the momentum is None
 weight_decay: 0.0005
 
 # global control
