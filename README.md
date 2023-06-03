@@ -26,3 +26,6 @@ For example, this command allows up to 100 selected clients in each epoch:
 ``
 mpiexec --oversubscribe -n 1 python server_main.py : -n 100 python client_main.py
 ``
+
+## News
+I have fixed an important bug on June 3, 2023, Please download the newest version.
