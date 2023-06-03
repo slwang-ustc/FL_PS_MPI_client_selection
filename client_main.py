@@ -1,6 +1,7 @@
 import asyncio
 import os
 import time
+
 from config import cfg
 
 import torch
@@ -8,10 +9,13 @@ import torch.optim as optim
 from client import ClientConfig
 from comm_utils import *
 from training_utils import train, test
-import datasets
 from models import utils
 from mpi4py import MPI
 import logging
+
+import copy
+
+import datasets
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -35,11 +39,11 @@ MASTER_RANK = 0
 
 def main():
     print(rank)
-
     client_config = ClientConfig(idx=0)
 
-    # load the test and train dataset
+    # dataset and the test dataloader
     train_dataset, test_dataset = datasets.load_datasets(cfg['dataset_type'], cfg['dataset_path'])
+    test_loader = datasets.create_dataloaders(test_dataset, batch_size=cfg['client_test_batch_size'], shuffle=False)
 
     # begin each epoch
     comm_tag = 1
@@ -50,10 +54,11 @@ def main():
         logger = init_logger(comm_tag, client_config)
         logger.info("_____****_____\nEpoch: {:04d}".format(client_config.epoch_idx))
 
+        torch.random.seed()
         # load the test and train loader
-        train_loader = datasets.create_dataloaders(train_dataset, batch_size=cfg['local_batch_size'],
-                                                   selected_idxs=client_config.train_data_idxes)
-        test_loader = datasets.create_dataloaders(test_dataset, batch_size=cfg['client_test_batch_size'], shuffle=False)
+        train_loader = datasets.create_dataloaders(
+            train_dataset, batch_size=cfg['local_batch_size'], selected_idxs=client_config.train_data_idxes
+        )
 
         # start local training
         loop = asyncio.new_event_loop()
@@ -160,7 +165,7 @@ async def local_training(config, train_loader, test_loader, logger):
         "Test_ACC: {:.4f}\n".format(test_acc)
     )
     
-    config.params_dict = local_model.state_dict()
+    config.params_dict = copy.deepcopy(local_model.state_dict())
     config.train_time = train_time
 
 

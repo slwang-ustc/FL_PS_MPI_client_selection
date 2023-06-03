@@ -1,11 +1,15 @@
 import time
 import math
 
+import numpy as np
 import torch
 import torch.nn as nn
 
+from config import cfg
+
 
 def train(model, data_loader, optimizer, local_iters=None, device=torch.device("cpu")):
+
     model.train()
     if local_iters is None:
         local_iters = math.ceil(len(data_loader.loader.dataset) / data_loader.loader.batch_size)

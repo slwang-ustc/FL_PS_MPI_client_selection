@@ -1,5 +1,6 @@
 import copy
 import asyncio
+from collections import OrderedDict
 from typing import List
 
 from torch import nn
@@ -57,8 +58,7 @@ def main():
     # init the global model
     global_model = utils.create_model_instance(cfg['model_type'])
     global_model.to(device)
-    global_params = nn.utils.parameters_to_vector(global_model.parameters())
-    global_params_num = global_params.nelement()
+    global_params_num = nn.utils.parameters_to_vector(global_model.parameters()).nelement()
     global_model_size = global_params_num * 4 / 1024 / 1024
     logger.info("Global params num: {}".format(global_params_num))
     logger.info("Global model Size: {} MB".format(global_model_size))
@@ -78,16 +78,17 @@ def main():
             s += "{:.2f}".format(partition_sizes[i][j]) + " "
         logger.info(s)
 
+    # load the test dataset and test loader
+    _, test_dataset = datasets.load_datasets(cfg['dataset_type'], cfg['dataset_path'])
+    test_loader = datasets.create_dataloaders(test_dataset, batch_size=cfg['test_batch_size'], shuffle=False)
+
     # create clients
     all_clients: List[ClientConfig] = list()
     for client_idx in range(client_num):
         client = ClientConfig(client_idx)
         client.lr = cfg['lr']
+        client.train_data_idxes = train_data_partition.use(client_idx)
         all_clients.append(client)
-
-    # load the test dataset and test loader
-    _, test_dataset = datasets.load_datasets(cfg['dataset_type'], cfg['dataset_path'])
-    test_loader = datasets.create_dataloaders(test_dataset, batch_size=cfg['test_batch_size'], shuffle=False)
 
     # begin each epoch
     for epoch_idx in range(1, 1 + cfg['epoch_num']):
@@ -97,30 +98,23 @@ def main():
         # The client selection algorithm can be implemented
         selected_num = 10
         selected_client_idxes = sample(range(client_num), selected_num)
-        logger.info("Selected clients' idxes: {}".format(selected_client_idxes))
-        print("Selected clients' idxes: {}".format(selected_client_idxes))
+        logger.info("Selected client idxes: {}".format(selected_client_idxes))
+        print("Selected client idxes: {}".format(selected_client_idxes))
 
         # create instances of the selected clients
         selected_clients = []
         for client_idx in selected_client_idxes:
-            client = ClientConfig(idx=client_idx)
-            for k, v in all_clients[client_idx].__dict__.items():
-                setattr(client, k, v)
-            client.epoch_idx = epoch_idx
-            client.params_dict = global_model.state_dict()
-            client.train_data_idxes = train_data_partition.use(client_idx)
-            selected_clients.append(client)
+            all_clients[client_idx].epoch_idx = epoch_idx
+            all_clients[client_idx].params_dict = OrderedDict()
+            for k, v in global_model.state_dict().items():
+                all_clients[client_idx].params_dict[k] = copy.deepcopy(global_model.state_dict()[k].detach())
+            selected_clients.append(all_clients[client_idx])
 
         # send the configurations to the selected clients
         communication_parallel(selected_clients, comm_tags, comm, action="send_config")
 
         # when all selected clients have completed local training, receive their configurations
         communication_parallel(selected_clients, comm_tags, comm, action="get_config")
-
-        for client in selected_clients:
-            for k, v in client.__dict__.items():
-                if k != 'params_dict' and k != 'train_data_idxes':
-                    setattr(all_clients[client.idx], k, v)
 
         # aggregate the clients' local model parameters
         aggregate_models(global_model, selected_clients)
@@ -142,8 +136,9 @@ def aggregate_models(global_model, client_list):
         for client in client_list:
             for k, v in client.params_dict.items():
                 if 'num_batches_tracked' not in k: 
-                    params_dict[k] += \
-                        client.aggregate_weight * (client.params_dict[k] - global_model.state_dict()[k])
+                    params_dict[k] = params_dict[k].detach() + copy.deepcopy(
+                        client.aggregate_weight * (client.params_dict[k].detach() - global_model.state_dict()[k].detach())
+                    )
     global_model.load_state_dict(params_dict)
 
 

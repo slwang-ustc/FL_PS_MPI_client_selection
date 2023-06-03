@@ -1,7 +1,7 @@
 import sys
-sys.path.append('/data/slwang/FL_PS_MPI_client_selection')
-import torch
+sys.path.append('/data/slwang/FL_MPI_client_selection')
 from config import cfg
+import math
 from torch import nn
 
 
@@ -40,8 +40,7 @@ class ResNet(nn.Module):
 
     def __init__(self, block, num_block):
         super(ResNet, self).__init__()
-
-        torch.manual_seed(cfg['model_init_seed'])
+        # torch.manual_seed(cfg['model_init_seed'])
 
         data_shape = cfg['data_shape']
         classes_size = cfg['classes_size']
@@ -62,13 +61,13 @@ class ResNet(nn.Module):
         self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512 * block.expansion, classes_size)
 
-        # for m in self.modules():
-        #     if isinstance(m, nn.Conv2d):
-        #         n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-        #         m.weight.data.normal_(0, math.sqrt(2. / n))
-        #     elif isinstance(m, nn.BatchNorm2d):
-        #         m.weight.data.fill_(1)
-        #         m.bias.data.zero_()
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+                m.weight.data.normal_(0, math.sqrt(2. / n))
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
 
     def _make_layer(self, block, out_planes, num_blocks, stride):
         strides = [stride] + [1] * (num_blocks - 1)

@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 from config import cfg
 
@@ -15,8 +14,7 @@ def init_param(m):
 class CNN(nn.Module):
     def __init__(self, data_shape, hidden_size, classes_size):
         super(CNN, self).__init__()
-
-        torch.manual_seed(cfg['model_init_seed'])
+        # torch.manual_seed(cfg['model_init_seed'])
 
         # head
         blocks = [nn.Conv2d(data_shape[0], hidden_size[0], 3, 1, 1)]
@@ -32,7 +30,7 @@ class CNN(nn.Module):
         blocks.extend([
             nn.Flatten(),
             nn.Linear(
-                int(hidden_size[-1] * cfg['data_shape'][1] * cfg['data_shape'][2] / (4 ** (len(hidden_size)-1))), 
+                int(hidden_size[-1] * cfg['data_shape'][1] * cfg['data_shape'][2] / (4 ** (len(hidden_size)-1))),
                 classes_size
             )
         ])
