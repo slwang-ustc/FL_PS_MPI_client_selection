@@ -28,4 +28,4 @@ mpiexec --oversubscribe -n 1 python server_main.py : -n 100 python client_main.p
 ``
 
 ## News
-I fixed an important bug on June 3, 2023, Please download the latest version.
+An important bug was fixed on June 3, 2023, Please download the latest version.
