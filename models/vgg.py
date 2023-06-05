@@ -7,7 +7,7 @@ import torch.nn.functional as F
 class VGG9(nn.Module):
     def __init__(self):
         super(VGG9, self).__init__()
-        torch.manual_seed(cfg['model_init_seed'])
+        # torch.manual_seed(cfg['model_init_seed'])
 
         self.conv_layer = nn.Sequential(
             # Conv Layer block 1
