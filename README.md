@@ -39,5 +39,6 @@ The momentum and weight_decay are 0.9 and 0.0005 for VGG9+, respectively.
 
 <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width = "300" height = "300" div align=left />
 
+
 ## News
 An important bug was fixed on June 3, 2023, Please download the latest version.
