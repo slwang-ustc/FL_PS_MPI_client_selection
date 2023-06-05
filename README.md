@@ -31,7 +31,7 @@ mpiexec --oversubscribe -n 1 python server_main.py : -n 100 python client_main.p
 ## Results
 
 ### Performance on the CIFAR-10
-The data on the clients follows IID. 
+The data on the clients follows IID.
 
 We set the lr as 0.1, local_batch_size as 32, local_iters as 50, decay_rate as 0.993 and min_lr as 0.001 for all models.
 
