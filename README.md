@@ -38,7 +38,7 @@ This is an implementation of federated learning framework with client selection 
 
 #### IID performance
 
-<img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="50%">
+<img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%"> <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%">
 
 ## News
 An important bug was fixed on June 3, 2023, Please download the latest version.
