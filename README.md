@@ -37,8 +37,7 @@ The total number of clients of "VGG9" and "VGG9+" is 10 and all clients are sele
 
 The momentum and weight_decay are 0.9 and 0.0005 for VGG9+, respectively.
 
-![figure](https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png)
-<img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width = "100" height = "100" div align=right />
+<img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width = "300" height = "300" div align=left />
 
 ## News
 An important bug was fixed on June 3, 2023, Please download the latest version.
