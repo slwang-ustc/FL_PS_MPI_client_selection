@@ -31,11 +31,13 @@ mpiexec --oversubscribe -n 1 python server_main.py : -n 100 python client_main.p
 ## Results
 
 ### Performance on the CIFAR-10
-The data on the clients follows IID. We set the lr as 0.1, local_batch_size as 32, decay_rate as 0.993 and min_lr as 0.001.
+The data on the clients follows IID. 
 
-The total number of clients of "VGG9" and "VGG9+" is 10 and all clients are selected to train the model in each epoch.
+We set the lr as 0.1, local_batch_size as 32, decay_rate as 0.993 and min_lr as 0.001 for all models.
 
-The momentum and weight_decay are 0.9 and 0.0005 for VGG9+, respectively.
+The total number of clients in "VGG9" and "VGG9+" is 10 and all clients are selected to train the model in each epoch. The total number of clients in "VGG9(100-10)" is 100 and 10 clients are randomly selected to train the model in each epoch.
+
+The momentum and weight_decay are 0.9 and 0.0005 both for VGG9+ and VGG9(100-10), respectively.
 
 <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="50%">
 
