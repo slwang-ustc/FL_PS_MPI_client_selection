@@ -34,7 +34,7 @@ This is an implementation of federated learning framework with client selection 
 * The total number of clients in "VGG9" and "VGG9+" is 10 and all clients are selected in each epoch. 
   The total number of clients in "VGG9(100-10)" is 100 and 10 clients are randomly selected in each epoch.
 
-* momentum = 0.9, weight_decay = 0.0005 both for VGG9+ and VGG9(100-10).
+* momentum = 0.9, weight_decay = 0.0005 both for "VGG9+" and "VGG9(100-10)".
 
 #### IID(left) and Non-IID(data_partition_parttern=2, non_iid_ratio=2, right)
 <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%">
