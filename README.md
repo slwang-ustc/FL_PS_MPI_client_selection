@@ -36,9 +36,7 @@ This is an implementation of federated learning framework with client selection 
 
 * momentum = 0.9, weight_decay = 0.0005 both for VGG9+ and VGG9(100-10).
 
-#### IID performance
-
-<img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%"> <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%">
+IID performance <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%"> ss <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%">
 
 ## News
 An important bug was fixed on June 3, 2023, Please download the latest version.
