@@ -33,7 +33,7 @@ mpiexec --oversubscribe -n 1 python server_main.py : -n 100 python client_main.p
 ### Performance on the CIFAR-10
 The data on the clients follows IID. 
 
-We set the lr as 0.1, local_batch_size as 32, decay_rate as 0.993 and min_lr as 0.001 for all models.
+We set the lr as 0.1, local_batch_size as 32, local_iters as 50, decay_rate as 0.993 and min_lr as 0.001 for all models.
 
 The total number of clients in "VGG9" and "VGG9+" is 10 and all clients are selected to train the model in each epoch. The total number of clients in "VGG9(100-10)" is 100 and 10 clients are randomly selected to train the model in each epoch.
 
