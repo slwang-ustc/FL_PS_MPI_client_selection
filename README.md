@@ -38,6 +38,7 @@ This is an implementation of federated learning framework with client selection 
 
 #### IID(left) and Non-IID(data_partition_parttern=2, non_iid_ratio=2, right)
 <img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10.png" width="30%">
+<img src="https://github.com/slwang-ustc/FL_PS_MPI_client_selection/blob/main/figs/vgg9_cifar10_noniid22.png" width="30%">
 
 ## News
 An important bug was fixed on June 3, 2023, Please download the latest version.
