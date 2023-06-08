@@ -1,12 +1,3 @@
-"""
-原始代码过于臃肿，包含了很多不必要的代码，此为简洁版本，逻辑上也更加清晰。
-"""
-
-
-class ClientAction:
-    LOCAL_TRAINING = "local_training"
-
-
 # 根据自己算法需要设置ClientConfig中的参数，不必要的参数就不用写入了
 class ClientConfig:
     def __init__(self, idx):
