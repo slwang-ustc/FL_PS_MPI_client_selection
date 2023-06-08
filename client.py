@@ -1,4 +1,4 @@
-# 根据自己算法需要设置ClientConfig中的参数，不必要的参数就不用写入了
+
 class ClientConfig:
     def __init__(self, idx):
         self.idx = idx
