@@ -90,13 +90,9 @@ def communicate_with_server(config, comm_tag, action):
     asyncio.set_event_loop(loop)
     tasks = []
     if action == "send_config":
-        task = asyncio.ensure_future(
-            send_config(config, comm_tag)
-        )
+        task = asyncio.ensure_future(send_config(config, comm_tag))
     elif action == "get_config":
-        task = asyncio.ensure_future(
-            get_config(config, comm_tag)
-        )
+        task = asyncio.ensure_future(get_config(config, comm_tag))
     else:
         raise ValueError('Not valid action')
     tasks.append(task)
