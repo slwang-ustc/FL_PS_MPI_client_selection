@@ -63,11 +63,7 @@ def main():
         # start local training
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        tasks = [
-            asyncio.ensure_future(
-                local_training(client_config, train_loader, test_loader, logger)
-            )
-        ]
+        tasks = [asyncio.ensure_future(local_training(client_config, train_loader, test_loader, logger))]
         loop.run_until_complete(asyncio.wait(tasks))
         loop.close()
 
