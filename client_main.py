@@ -90,9 +90,13 @@ def communicate_with_server(config, comm_tag, action):
     asyncio.set_event_loop(loop)
     tasks = []
     if action == "send_config":
-        task = asyncio.ensure_future(send_config(config, comm_tag))
+        task = asyncio.ensure_future(
+            send_config(config, comm_tag)
+        )
     elif action == "get_config":
-        task = asyncio.ensure_future(get_config(config, comm_tag))
+        task = asyncio.ensure_future(
+            get_config(config, comm_tag)
+        )
     else:
         raise ValueError('Not valid action')
     tasks.append(task)
@@ -103,8 +107,8 @@ def communicate_with_server(config, comm_tag, action):
 def init_logger(comm_tag, client_config):
     logger = logging.getLogger(os.path.basename(__file__).split('.')[0] + str(comm_tag))
     logger.setLevel(logging.INFO)
-    filename = RESULT_PATH + now + "_" + os.path.basename(__file__).split('.')[0] + 
-        '_' + str(client_config.idx) + '.log'
+    filename = RESULT_PATH + now + "_" + os.path.basename(__file__).split('.')[0] + '_' + str(
+        client_config.idx) + '.log'
     file_handler = logging.FileHandler(filename=filename)
     formatter = logging.Formatter("%(message)s")
     file_handler.setFormatter(formatter)
@@ -123,6 +127,7 @@ async def local_training(config, train_loader, test_loader, logger):
         epoch_lr = max(cfg['decay_rate'] * epoch_lr, cfg['min_lr'])
         config.lr = epoch_lr
     logger.info("lr: {}\n".format(epoch_lr))
+
     if cfg['momentum'] < 0:
         optimizer = optim.SGD(local_model.parameters(), lr=epoch_lr, weight_decay=cfg['weight_decay'])
     else:

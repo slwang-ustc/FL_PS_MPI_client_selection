@@ -100,14 +100,12 @@ def main():
         selected_client_idxes = sample(range(client_num), selected_num)
         logger.info("Selected client idxes: {}".format(selected_client_idxes))
         print("Selected client idxes: {}".format(selected_client_idxes))
-
-        # create instances of the selected clients
         selected_clients = []
         for client_idx in selected_client_idxes:
             all_clients[client_idx].epoch_idx = epoch_idx
             all_clients[client_idx].params_dict = OrderedDict()
             for k, v in global_model.state_dict().items():
-                all_clients[client_idx].params_dict[k] = copy.deepcopy(global_model.state_dict()[k].detach())
+                all_clients[client_idx].params_dict[k] = copy.deepcopy(v.detach())
             selected_clients.append(all_clients[client_idx])
 
         # send the configurations to the selected clients
@@ -158,13 +156,9 @@ def communication_parallel(client_list, comm_tags, comm, action):
     tasks = []
     for m, client in enumerate(client_list): 
         if action == "send_config":
-            task = asyncio.ensure_future(
-                send_config(client, m + 1, comm, comm_tags[m + 1])
-            )
+            task = asyncio.ensure_future(send_config(client, m + 1, comm, comm_tags[m + 1]))
         elif action == "get_config":
-            task = asyncio.ensure_future(
-                get_config(client, comm, m + 1, comm_tags[m + 1])
-            )
+            task = asyncio.ensure_future(get_config(client, comm, m + 1, comm_tags[m + 1]))
         else:
             raise ValueError('Not valid action')
         tasks.append(task)
