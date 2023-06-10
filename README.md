@@ -32,6 +32,7 @@ This is an implementation of federated learning framework with client selection 
 * lr= 0.1, decay_rate = 0.993, min_lr = 0.001, local_batch_size = 32, local_iters = 50 for all models.
 
 * The total number of clients in "VGG9" and "VGG9+" is 10 and all clients are selected in each epoch. 
+  
   The total number of clients in "VGG9(100-10)" is 100 and 10 clients are randomly selected in each epoch.
 
 * momentum = 0.9, weight_decay = 0.0005 both for "VGG9+" and "VGG9(100-10)".
