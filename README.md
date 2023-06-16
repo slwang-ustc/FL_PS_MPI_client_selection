@@ -42,4 +42,5 @@ This is an implementation of federated learning framework with client selection 
 
 ## News
 An important bug was fixed on June 3, 2023, Please download the latest version.
-The third non-iid data partition method is added in the server_main.py.
+
+The third non-iid data partition method is added in the server_main.py on June 16, 2023.
