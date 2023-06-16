@@ -202,6 +202,15 @@ def partition_data(dataset_type, partition_pattern, non_iid_ratio, client_num=10
                         partition_sizes[i][j] = 1. / count
         else:
             raise ValueError('Non-IID ratio is too large')
+    elif partition_pattern == 3:
+        if 0 < non_iid_ratio < 10:
+            most_data_proportion = cfg['classes_size'] / client_num * non_iid_ratio * 0.1
+            minor_data_proportion = cfg['classes_size'] / client_num * (1 - non_iid_ratio * 0.1) / (cfg['classes_size'] - 1)
+            partition_sizes *= minor_data_proportion
+            for i in range(client_num):
+                partition_sizes[i % cfg['classes_size']][i] = most_data_proportion
+        else:
+            raise ValueError('Non-IID ratio is too large')
     else:
         raise ValueError('Not valid partition pattern')
 
