@@ -1,8 +1,9 @@
 # Framework of federated learning with client selection using MPI
+# 联邦学习客户端选择基础框架
 
 ## Introduction
 
-This is an implementation of federated learning framework with client selection using MPI.
+This is an implementation of federated learning framework with client selection using MPI. You can easily extend this basic framework to meet your specific requirements.
 
 * Global hyperparameters are defined in config.yml
 * server_main.py is the main file to start the server program
